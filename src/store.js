@@ -5,4 +5,15 @@ export const store = reactive({
     searchText: "",
     movies: [],
     series: [],
+    loading: false,
+    flag: [
+        'de',
+        'en',
+        'es',
+        'fr',
+        'it',
+        'ja',
+        'pt',
+        'zh',
+    ]
 })
