@@ -1,5 +1,5 @@
 <script>
-import {store} from './store';
+import { store } from './store';
 import axios from 'axios';
 import AppHeader from './components/AppHeader.vue';
 import AppMain from './components/AppMain.vue';
@@ -31,13 +31,15 @@ export default {
       });
     }
   },
-  components: {AppHeader, AppMain}
+  components: { AppHeader, AppMain }
 }
 </script>
 
 <template>
-<AppHeader @buttonClicked="showResult()"/>
-<AppMain />
+  <div class="boolflix">
+    <AppHeader @buttonClicked="showResult()" />
+    <AppMain v-show="store.movies.length > 0 || store.movies.length > 0" />
+  </div>
 </template>
 
 <style lang="scss">

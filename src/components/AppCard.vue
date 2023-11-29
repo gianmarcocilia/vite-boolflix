@@ -53,9 +53,9 @@ export default {
 .card {
     border: 1px solid rgb(255, 255, 255);
     position: relative;
-    overflow: hidden;
     padding: 1rem .5rem;
     height: 513px;
+    overflow: auto;
 
     h3 {
         margin-bottom: 5px;
@@ -81,9 +81,8 @@ export default {
 
     p {
         padding: .5rem 0;
-        overflow: auto;
         color: white;
-        font-size: 18px;
+        font-size: 15px;
         span {
             color: rgb(226, 226, 226);
         }

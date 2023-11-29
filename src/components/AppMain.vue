@@ -34,7 +34,6 @@ export default {
 
 <style lang="scss" scoped>
 main {
-    background-color: rgb(31, 31, 31);
     color: rgb(226, 226, 226);
     padding: 2rem 0;
 
