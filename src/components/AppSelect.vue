@@ -3,11 +3,23 @@ import { store } from '../store';
 export default {
     props: {
         type: String,
-        genres: Array
+        genres: Array,
     },
     data() {
         return {
             store,
+            tempModel: null,
+        }
+    },
+    methods: {
+        handleModel() {
+            if (this.type == 'Film') {
+                this.store.selectedFilmGen = this.tempModel 
+            } 
+
+            if (this.type == 'SerieTv') {
+                this.store.selectedSerieTvGen = this.tempModel 
+            } 
         }
     }
 }
@@ -16,9 +28,9 @@ export default {
 <template>
     <div class="my-select">
         <label for="{{ type }}">Filtra per genere di {{ type }}</label>
-        <select name="{{ type }}" id="">
-            <option selected>Nessun Filtro</option>
-            <option v-for="genre in genres" value="">{{ genre.name }}</option>
+        <select name="{{ type }}" id="" v-model="tempModel" @change="handleModel">
+            <option selected value="">Nessun Filtro</option>
+            <option v-for="genre in genres" :value="genre.name">{{ genre.name }}</option>
         </select>
     </div>
 </template>

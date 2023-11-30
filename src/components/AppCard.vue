@@ -133,6 +133,14 @@ export default {
                 }
             }
         }
+
+        button {
+            background-color: transparent;
+            color: rgb(177, 177, 177);
+            text-decoration: underline;
+            border: none;
+            cursor: pointer;
+        }
     }
 
     &:hover .main-img {

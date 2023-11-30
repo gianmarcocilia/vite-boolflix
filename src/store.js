@@ -21,4 +21,6 @@ export const store = reactive({
     curGen: [],
     movieGen: [],
     tvGen: [],
+    selectedFilmGen: "",
+    selectedSerieTvGen: "",
 })
