@@ -27,6 +27,8 @@ export default {
 header {
     background-color: black;
     padding: .5rem;
+    display: flex;
+    align-items: center;
 }
 .row {
     display: flex;

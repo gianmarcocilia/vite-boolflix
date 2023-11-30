@@ -3,14 +3,17 @@ import { store } from './store';
 import axios from 'axios';
 import AppHeader from './components/AppHeader.vue';
 import AppMain from './components/AppMain.vue';
+import AppLoader from './components/AppLoader.vue';
 export default {
   data() {
     return {
       store,
+      mainVisible: false
     }
   },
   methods: {
     showResult() {
+
       const params = {
           api_key: this.store.api_Key,
           query: this.store.searchText,
@@ -23,17 +26,20 @@ export default {
       axios.get(`${this.store.baseApiUrl}/search/tv`, { params }).then((resp) => {
         this.store.series = resp.data.results;
         this.store.loading = false;
+        this.mainVisible = true;
       });
     }
   },
-  components: { AppHeader, AppMain }
+  components: { AppHeader, AppMain, AppLoader },
+  
 }
 </script>
 
 <template>
   <div class="boolflix">
     <AppHeader @buttonClicked="showResult()" />
-    <AppMain v-show="store.movies.length > 0 || store.movies.length > 0" />
+    <AppLoader v-if="store.loading"/>
+    <AppMain v-show="mainVisible" />
   </div>
 </template>
 
