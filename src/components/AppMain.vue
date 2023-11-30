@@ -1,5 +1,6 @@
 <script>
 import { store } from '../store';
+import axios from 'axios';
 import AppCard from './AppCard.vue';
 export default {
     data() {
@@ -7,7 +8,20 @@ export default {
             store,
         }
     },
-    components: { AppCard }
+    components: { AppCard },
+    methods: {
+        getMoreInfo() {
+            if (this.store.cardId > 0) {
+                axios.get(`${this.store.baseApiUrl}/movie/${this.store.cardId}/credits`, {
+                params: { 
+                    api_key: this.store.api_Key
+                }}).then(resp => {
+                    this.store.curCast = resp.data.cast;
+                })
+            }  
+        }
+
+    }
 
 }
 </script>
@@ -18,14 +32,14 @@ export default {
             <h2>Film</h2>
             <div class="row">
                 <div class="col" v-for="movie in store.movies">
-                    <AppCard :item="movie" />
+                    <AppCard :item="movie" @moreInfo="getMoreInfo"/>
                 </div>
             </div>
 
             <h2>Serie TV</h2>
             <div class="row">
                 <div class="col" v-for="serie in store.series">
-                    <AppCard :item="serie" />
+                    <AppCard :item="serie" @moreInfo="getMoreInfo"/>
                 </div>
             </div>
         </div>
@@ -54,4 +68,5 @@ main {
             width: calc(100% / 5);
         }
     }
-}</style>
+}
+</style>

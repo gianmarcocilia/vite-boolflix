@@ -15,5 +15,7 @@ export const store = reactive({
         'ja',
         'pt',
         'zh',
-    ]
+    ],
+    cardId: 0,
+    curCast: [],
 })

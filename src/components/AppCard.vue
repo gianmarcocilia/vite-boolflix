@@ -28,6 +28,16 @@ export default {
                 return resultPath;
             }
         },
+        getCardId() {
+            this.store.cardId = this.item.id;
+            console.log(this.item.id, this.store.cardId);
+        },
+        getBackTrama() {
+            this.store.cardId = 0;
+        },
+        showCastOrTrama() {
+            return this.store.cardId === this.item.id;
+        }
     },
     computed: {
         flagIncluse() {
@@ -52,7 +62,12 @@ export default {
             Lingua: <img :src="getImagePath(item.original_language)" alt="">
         </h3>
         <h3 v-else>Lingua: {{ item.original_language }}</h3>
-        <p><span>Trama:</span> {{ item.overview }}</p>
+        <div class="overview">
+            <p class="cast" v-if="showCastOrTrama()">Cast: <span v-for="actor in store.curCast">{{ actor.name }} </span></p>
+            <p class="trama" v-else><span>Trama:</span> {{ item.overview }}</p>
+            <button v-if="showCastOrTrama()" @click="getBackTrama">Show overview</button>
+            <button v-else @click="getCardId(); $emit('moreInfo')">Show cast</button>
+        </div>
         <img v-if="posterPath(item)" class="main-img" :src="posterPath(item)" alt="">
     </div>
 </template>
@@ -86,13 +101,20 @@ export default {
             width: 35px;
         }
     }
+    .overview {
+        p {
+            padding: .5rem 0;
+            color: white;
+            font-size: 15px;
+            span {
+                color: rgb(226, 226, 226);
+            }
+        }
+        a {
+            color: inherit;
+        }
+        .cast {
 
-    p {
-        padding: .5rem 0;
-        color: white;
-        font-size: 15px;
-        span {
-            color: rgb(226, 226, 226);
         }
     }
     &:hover .main-img {
@@ -103,8 +125,8 @@ export default {
         position: absolute;
         top: 0;
         left: 0;
-        width: 100%;
         height: 100%;
+        width: 100%;
     }
 }
 </style>
