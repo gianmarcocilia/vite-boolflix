@@ -8,8 +8,23 @@ export default {
   data() {
     return {
       store,
-      mainVisible: false
     }
+  },
+  created() {
+    axios.get(`${this.store.baseApiUrl}/genre/movie/list`, {
+      params: {
+        api_key: this.store.api_Key,
+      }
+    }).then(resp => {
+      this.store.movieGen = resp.data.genres;
+    });
+    axios.get(`${this.store.baseApiUrl}/genre/tv/list`, {
+      params: {
+        api_key: this.store.api_Key
+      }
+    }).then(resp => {
+      this.store.tvGen = resp.data.genres;
+    });
   },
   methods: {
     showResult() {
@@ -40,7 +55,7 @@ export default {
   <div class="boolflix">
     <AppHeader @buttonClicked="showResult()" @pressEnter="showResult()" />
     <AppLoader v-if="store.loading"/>
-    <AppMain v-show="mainVisible" />
+    <AppMain />
   </div>
 </template>
 
