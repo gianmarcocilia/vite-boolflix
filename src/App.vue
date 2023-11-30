@@ -37,7 +37,7 @@ export default {
 
 <template>
   <div class="boolflix">
-    <AppHeader @buttonClicked="showResult()" />
+    <AppHeader @buttonClicked="showResult()" @pressEnter="showResult()" />
     <AppLoader v-if="store.loading"/>
     <AppMain v-show="mainVisible" />
   </div>

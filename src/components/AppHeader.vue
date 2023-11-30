@@ -15,7 +15,7 @@ export default {
             <div class="row">
                 <h1>Boolflix</h1>
                 <div>
-                    <input type="text" v-model="store.searchText">
+                    <input type="text" v-model="store.searchText" @keyup.enter="$emit('pressEnter')">
                     <button @click="$emit('buttonClicked')">Cerca</button>
                 </div>
             </div>
