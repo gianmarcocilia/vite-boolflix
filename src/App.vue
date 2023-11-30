@@ -12,17 +12,17 @@ export default {
   methods: {
     showResult() {
       this.store.loading = true;
-      axios.get(this.store.apiMovieUrl, {
+      axios.get(`${this.store.baseApiUrl}/search/movie`, {
         params: {
-          api_key: '3be13342718caf3e47665ccb2924758a',
+          api_key: this.store.api_Key,
           query: this.store.searchText,
         },
       }).then((resp) => {
         this.store.movies = resp.data.results;
       });
-      axios.get(this.store.apiSerieUrl, {
+      axios.get(`${this.store.baseApiUrl}/search/tv`, {
         params: {
-          api_key: '3be13342718caf3e47665ccb2924758a',
+          api_key: this.store.api_Key,
           query: this.store.searchText,
         },
       }).then((resp) => {

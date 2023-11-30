@@ -1,7 +1,7 @@
 import {reactive} from 'vue';
 export const store = reactive({
-    apiMovieUrl: 'https://api.themoviedb.org/3/search/movie',
-    apiSerieUrl: 'https://api.themoviedb.org/3/search/tv',
+    baseApiUrl: 'https://api.themoviedb.org/3',
+    api_Key: '3be13342718caf3e47665ccb2924758a',
     searchText: "",
     movies: [],
     series: [],

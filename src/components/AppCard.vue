@@ -13,9 +13,6 @@ export default {
         getImagePath(imgName) {
             return new URL(`../assets/img/${imgName}.png`, import.meta.url).href;
         },
-        flagIncluse(item) {
-            return this.store.flag.includes(item.original_language) ? true : false;
-        },
         voteInFive(vote) {
             const voteToFive = Math.round((vote * 5) / 10);
             return voteToFive
@@ -31,6 +28,11 @@ export default {
                 return resultPath;
             }
         },
+    },
+    computed: {
+        flagIncluse() {
+            return this.store.flag.includes(this.item.original_language);
+        }
     }
 }
 </script>
@@ -40,7 +42,7 @@ export default {
         <h3>Titolo: <span>{{ item.title || item.name}}</span></h3>
         <h3>Titolo originale: <span>{{ item.original_title || item.original_name }}</span></h3>
         <h3>Voto: <span class="star"><i v-for="num in voteInFive(item.vote_average)" class="fa-solid fa-star"></i><i v-for="num in starEmpty(voteInFive(item.vote_average))" class="fa-regular fa-star"></i></span></h3>   
-        <h3 v-if="flagIncluse(item)" class="lang-img">
+        <h3 v-if="flagIncluse" class="lang-img">
             Lingua: <img :src="getImagePath(item.original_language)" alt="">
         </h3>
         <h3 v-else>Lingua: {{ item.original_language }}</h3>
