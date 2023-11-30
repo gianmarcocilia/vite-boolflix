@@ -11,21 +11,16 @@ export default {
   },
   methods: {
     showResult() {
-      this.store.loading = true;
-      axios.get(`${this.store.baseApiUrl}/search/movie`, {
-        params: {
+      const params = {
           api_key: this.store.api_Key,
           query: this.store.searchText,
-        },
-      }).then((resp) => {
+        }
+      this.store.loading = true;
+      axios.get(`${this.store.baseApiUrl}/search/movie`, { params }).then((resp) => {
         this.store.movies = resp.data.results;
       });
-      axios.get(`${this.store.baseApiUrl}/search/tv`, {
-        params: {
-          api_key: this.store.api_Key,
-          query: this.store.searchText,
-        },
-      }).then((resp) => {
+
+      axios.get(`${this.store.baseApiUrl}/search/tv`, { params }).then((resp) => {
         this.store.series = resp.data.results;
         this.store.loading = false;
       });

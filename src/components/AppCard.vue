@@ -32,6 +32,12 @@ export default {
     computed: {
         flagIncluse() {
             return this.store.flag.includes(this.item.original_language);
+        },
+        title() {
+            return this.item.title || this.item.name;
+        },
+        originalTitle() {
+            return this.item.original_title || this.item.original_name
         }
     }
 }
@@ -39,8 +45,8 @@ export default {
 
 <template>
     <div class="card">
-        <h3>Titolo: <span>{{ item.title || item.name}}</span></h3>
-        <h3>Titolo originale: <span>{{ item.original_title || item.original_name }}</span></h3>
+        <h3>Titolo: <span>{{ title }}</span></h3>
+        <h3>Titolo originale: <span>{{ originalTitle }}</span></h3>
         <h3>Voto: <span class="star"><i v-for="num in voteInFive(item.vote_average)" class="fa-solid fa-star"></i><i v-for="num in starEmpty(voteInFive(item.vote_average))" class="fa-regular fa-star"></i></span></h3>   
         <h3 v-if="flagIncluse" class="lang-img">
             Lingua: <img :src="getImagePath(item.original_language)" alt="">
