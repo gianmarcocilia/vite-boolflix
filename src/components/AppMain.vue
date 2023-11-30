@@ -16,9 +16,20 @@ export default {
                 params: { 
                     api_key: this.store.api_Key
                 }}).then(resp => {
-                    this.store.curCast = resp.data.cast;
+                    this.store.curCast = this.troncateArray(resp.data.cast);
+                });
+
+                axios.get(`${this.store.baseApiUrl}/movie/${this.store.cardId}`, {
+                    params: {
+                        api_key: this.store.api_Key
+                    }
+                }).then(resp => {
+                    this.store.curGen = resp.data.genres;
                 })
             }  
+        },
+        troncateArray(array) {
+            return array.splice(0, 5);
         }
 
     }

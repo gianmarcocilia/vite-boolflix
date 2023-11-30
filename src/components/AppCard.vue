@@ -35,7 +35,7 @@ export default {
         getBackTrama() {
             this.store.cardId = 0;
         },
-        showCastOrTrama() {
+        showDetailsOrTrama() {
             return this.store.cardId === this.item.id;
         }
     },
@@ -57,16 +57,26 @@ export default {
     <div class="card">
         <h3>Titolo: <span>{{ title }}</span></h3>
         <h3>Titolo originale: <span>{{ originalTitle }}</span></h3>
-        <h3>Voto: <span class="star"><i v-for="num in voteInFive(item.vote_average)" class="fa-solid fa-star"></i><i v-for="num in starEmpty(voteInFive(item.vote_average))" class="fa-regular fa-star"></i></span></h3>   
+        <h3>Voto: <span class="star"><i v-for="num in voteInFive(item.vote_average)" class="fa-solid fa-star"></i><i
+                    v-for="num in starEmpty(voteInFive(item.vote_average))" class="fa-regular fa-star"></i></span></h3>
         <h3 v-if="flagIncluse" class="lang-img">
             Lingua: <img :src="getImagePath(item.original_language)" alt="">
         </h3>
         <h3 v-else>Lingua: {{ item.original_language }}</h3>
         <div class="overview">
-            <p class="cast" v-if="showCastOrTrama()">Cast: <span v-for="actor in store.curCast">{{ actor.name }} </span></p>
+            <ul class="more" v-if="showDetailsOrTrama()">
+                <li>Cast:</li>
+                <li v-for="actor in store.curCast">
+                    {{ actor.name }}
+                </li>
+                <li class="genere">Genere:</li>
+                <li v-for="genere in store.curGen">
+                    {{ genere.name }}
+                </li>
+            </ul>
             <p class="trama" v-else><span>Trama:</span> {{ item.overview }}</p>
-            <button v-if="showCastOrTrama()" @click="getBackTrama">Show overview</button>
-            <button v-else @click="getCardId(); $emit('moreInfo')">Show cast</button>
+            <button v-if="showDetailsOrTrama()" @click="getBackTrama">Show overview</button>
+            <button v-else @click="getCardId(); $emit('moreInfo')">Show details</button>
         </div>
         <img v-if="posterPath(item)" class="main-img" :src="posterPath(item)" alt="">
     </div>
@@ -83,6 +93,7 @@ export default {
     h3 {
         margin-bottom: 5px;
         font-size: 20px;
+
         span {
             font-size: 30px;
             color: rgb(255, 255, 255);
@@ -97,26 +108,33 @@ export default {
         display: flex;
         gap: .5rem;
         align-items: center;
+
         img {
             width: 35px;
         }
     }
+
     .overview {
         p {
             padding: .5rem 0;
             color: white;
             font-size: 15px;
+
             span {
                 color: rgb(226, 226, 226);
             }
         }
-        a {
-            color: inherit;
-        }
-        .cast {
 
+        .more {
+            li {
+                padding-bottom: .1rem;
+                &.genere {
+                    padding-top: .4rem;
+                }
+            }
         }
     }
+
     &:hover .main-img {
         display: none;
     }

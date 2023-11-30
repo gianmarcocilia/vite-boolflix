@@ -18,4 +18,5 @@ export const store = reactive({
     ],
     cardId: 0,
     curCast: [],
+    curGen: []
 })
