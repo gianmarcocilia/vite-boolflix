@@ -17,8 +17,8 @@ export default {
             <div class="row">
                 <h1>Boolflix</h1>
                 <div class="header-rigth">
-                    <AppSelect type="SerieTv" :genres="store.tvGen"/>
-                    <AppSelect type="Film" :genres="store.movieGen" />
+                    <AppSelect type="SerieTv" :genres="store.tvGen" :typeList="this.store.series" />
+                    <AppSelect type="Film" :genres="store.movieGen" :typeList="this.store.movies" />
                     <input type="text" v-model.trim="store.searchText" @keyup.enter="$emit('pressEnter')">
                     <button @click="$emit('buttonClicked')">Cerca</button>
                 </div>

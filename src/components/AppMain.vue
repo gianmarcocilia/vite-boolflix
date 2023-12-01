@@ -31,7 +31,6 @@ export default {
         troncateArray(array) {
             return array.splice(0, 5);
         }
-
     }
 
 }
@@ -40,20 +39,20 @@ export default {
 <template>
     <main>
         <div class="container">
-            <section class="film" v-show="store.movies.length > 0">
+            <section class="film" v-show="this.store.movies.length > 0">
                 <h2>Film</h2>
                 <div class="row">
-                    <div class="col" v-for="movie in store.movies">
-                        <AppCard :item="movie" @moreInfo="getMoreInfo"/>
+                    <div class="col" v-for="movie in this.store.movies" >
+                        <AppCard :item="movie" @moreInfo="getMoreInfo" type="film"/>
                     </div>
                 </div>
             </section>
 
-            <section class="tv" v-show="store.series.length > 0">
+            <section class="tv" v-show="this.store.series.length > 0">
                 <h2>Serie TV</h2>
                 <div class="row">
-                    <div class="col" v-for="serie in store.series">
-                        <AppCard :item="serie" @moreInfo="getMoreInfo"/>
+                    <div class="col" v-for="serie in this.store.series">
+                        <AppCard :item="serie" @moreInfo="getMoreInfo" type="serie"/>
                     </div>
                 </div>
             </section>
@@ -81,6 +80,7 @@ main {
 
         .col {
             width: calc(100% / 5);
+            aspect-ratio: .6;
         }
     }
 }

@@ -3,6 +3,7 @@ import { store } from '../store';
 export default {
     props: {
         item: Object,
+        type: String,
     },
     data() {
         return {
@@ -22,7 +23,9 @@ export default {
         },
         showDetailsOrTrama() {
             return this.store.cardId === this.item.id;
-        }
+        },
+       
+       
     },
     computed: {
         flagIncluse() {
@@ -42,24 +45,47 @@ export default {
             }
         },
         voteStar() {
-            Math.ceil(this.item.vote_average / 2)
+            return Math.ceil(this.item.vote_average / 2);
+        },
+        addNone() {
+            if (this.type === "film" && this.store.selectedFilmGen != null) {
+                if ((this.item.genre_ids.includes(this.store.selectedFilmGen))) {
+                    console.log("Film visibile");
+                    return true;
+                } else {
+                    console.log("film nascosto");
+                    return false;
+                }
+            }
+            if (this.type === "serie" && this.store.selectedSerieTvGen != null) {
+                if ((this.item.genre_ids.includes(this.store.selectedFilmGen))) {
+                    console.log("Serie visibile");
+                    return true;
+                } else {
+                    console.log("Serie Nascosta");
+                    return false
+                }
+            }
+            return true;
         }
     }
 }
 </script>
 
 <template>
-    <div class="card">
-        <h3>Titolo: <span>{{ title }}</span></h3>
-        <h3>Titolo originale: <span>{{ originalTitle }}</span></h3>
-        <h3>Voto: <span class="star">
-            <i v-for="num in voteStar" :key="num" class="fa-solid fa-star"></i>
-            <i v-for="num in (5 - voteStar)" class="fa-regular fa-star" :key="num"></i></span>
-        </h3>
-        <h3 v-if="flagIncluse" class="lang-img">
-            Lingua: <img :src="getImagePath(item.original_language)" alt="">
-        </h3>
-        <h3 v-else>Lingua: {{ item.original_language }}</h3>
+    <div class="card" v-show="addNone">
+        <div class="main-details">
+            <h3>Titolo: <span>{{ title }}</span></h3>
+            <h3 v-show="title !== originalTitle">Titolo originale: <span>{{ originalTitle }}</span></h3>
+            <h3>Voto: <span class="star">
+                    <i v-for="num in voteStar" :key="num" class="fa-solid fa-star"></i>
+                    <i v-for="num in (5 - voteStar)" class="fa-regular fa-star"></i></span>
+            </h3>
+            <h3 v-if="flagIncluse" class="lang-img">
+                Lingua: <img :src="getImagePath(item.original_language)" alt="">
+            </h3>
+            <h3 v-else>Lingua: {{ item.original_language }}</h3>
+        </div>
         <div class="overview">
             <ul class="more" v-if="showDetailsOrTrama()">
                 <li>Cast:</li>
@@ -84,15 +110,19 @@ export default {
     border: 1px solid rgb(255, 255, 255);
     position: relative;
     padding: 1rem .5rem;
-    height: 513px;
-    overflow: auto;
+    width: 100%;
+    height: 100%;
+
+    .main-details {
+        height: 40%;
+    }
 
     h3 {
         margin-bottom: 5px;
-        font-size: 20px;
+        font-size: 16px;
 
         span {
-            font-size: 30px;
+            font-size: 22px;
             color: rgb(255, 255, 255);
         }
     }
@@ -112,6 +142,9 @@ export default {
     }
 
     .overview {
+        overflow: auto;
+        height: 60%;
+
         p {
             padding: .5rem 0;
             color: white;
@@ -125,6 +158,7 @@ export default {
         .more {
             li {
                 padding-bottom: .1rem;
+
                 &.genere {
                     padding-top: .4rem;
                 }
@@ -148,8 +182,9 @@ export default {
         position: absolute;
         top: 0;
         left: 0;
-        height: 100%;
-        width: 100%;
+        object-fit: cover;
+        display: block;
+        aspect-ratio: .6;
     }
 }
 </style>
