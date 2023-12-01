@@ -21,13 +21,6 @@ export default {
             const result = 5 - vote;
             return result;
         },
-        posterPath(item) {
-            const path = 'https://image.tmdb.org/t/p/w342';
-            if (item.poster_path) {
-                const resultPath = path + item.poster_path
-                return resultPath;
-            }
-        },
         getCardId() {
             this.store.cardId = this.item.id;
             console.log(this.item.id, this.store.cardId);
@@ -48,6 +41,13 @@ export default {
         },
         originalTitle() {
             return this.item.original_title || this.item.original_name
+        },
+        posterPath() {
+            const path = 'https://image.tmdb.org/t/p/w342';
+            if (this.item.poster_path) {
+                const resultPath = path + this.item.poster_path
+                return resultPath;
+            }
         }
     }
 }
@@ -78,7 +78,7 @@ export default {
             <button v-if="showDetailsOrTrama()" @click="getBackTrama">Show overview</button>
             <button v-else @click="getCardId(); $emit('moreInfo')">Show details</button>
         </div>
-        <img v-if="posterPath(item)" class="main-img" :src="posterPath(item)" alt="">
+        <img v-if="posterPath" class="main-img" :src="posterPath" alt="">
     </div>
 </template>
 
