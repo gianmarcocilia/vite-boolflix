@@ -13,14 +13,6 @@ export default {
         getImagePath(imgName) {
             return new URL(`../assets/img/${imgName}.png`, import.meta.url).href;
         },
-        voteInFive(vote) {
-            const voteToFive = Math.round((vote * 5) / 10);
-            return voteToFive
-        },
-        starEmpty(vote) {
-            const result = 5 - vote;
-            return result;
-        },
         getCardId() {
             this.store.cardId = this.item.id;
             console.log(this.item.id, this.store.cardId);
@@ -48,6 +40,9 @@ export default {
                 const resultPath = path + this.item.poster_path
                 return resultPath;
             }
+        },
+        voteStar() {
+            Math.ceil(this.item.vote_average / 2)
         }
     }
 }
@@ -57,8 +52,10 @@ export default {
     <div class="card">
         <h3>Titolo: <span>{{ title }}</span></h3>
         <h3>Titolo originale: <span>{{ originalTitle }}</span></h3>
-        <h3>Voto: <span class="star"><i v-for="num in voteInFive(item.vote_average)" class="fa-solid fa-star"></i><i
-                    v-for="num in starEmpty(voteInFive(item.vote_average))" class="fa-regular fa-star"></i></span></h3>
+        <h3>Voto: <span class="star">
+            <i v-for="num in voteStar" :key="num" class="fa-solid fa-star"></i>
+            <i v-for="num in (5 - voteStar)" class="fa-regular fa-star" :key="num"></i></span>
+        </h3>
         <h3 v-if="flagIncluse" class="lang-img">
             Lingua: <img :src="getImagePath(item.original_language)" alt="">
         </h3>
