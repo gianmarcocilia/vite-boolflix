@@ -46,34 +46,13 @@ export default {
         },
         voteStar() {
             return Math.ceil(this.item.vote_average / 2);
-        },
-        addNone() {
-            if (this.type === "film" && this.store.selectedFilmGen != null) {
-                if ((this.item.genre_ids.includes(this.store.selectedFilmGen))) {
-                    console.log("Film visibile");
-                    return true;
-                } else {
-                    console.log("film nascosto");
-                    return false;
-                }
-            }
-            if (this.type === "serie" && this.store.selectedSerieTvGen != null) {
-                if ((this.item.genre_ids.includes(this.store.selectedFilmGen))) {
-                    console.log("Serie visibile");
-                    return true;
-                } else {
-                    console.log("Serie Nascosta");
-                    return false
-                }
-            }
-            return true;
         }
     }
 }
 </script>
 
 <template>
-    <div class="card" v-show="addNone">
+    <div class="card">
         <div class="main-details">
             <h3>Titolo: <span>{{ title }}</span></h3>
             <h3 v-show="title !== originalTitle">Titolo originale: <span>{{ originalTitle }}</span></h3>
