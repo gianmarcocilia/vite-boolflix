@@ -33,16 +33,17 @@ export default {
             return array.splice(0, 5);
         },
         addNone(control, object) {
-            if (control != null) {
+            console.log(control);
+            if (control != null && control != "0") {
                 if ((object.genre_ids.includes(control))) {
                     console.log("visibile");
-                    return "";
+                    return true;
                 } else {
                     console.log("nascosto");
-                    return " none";
+                    return false;
                 }
             }
-            return "";
+            return true;
         }
     }
 }
@@ -54,7 +55,7 @@ export default {
             <section class="film" v-show="this.store.movies.length > 0">
                 <h2>Film</h2>
                 <div class="row">
-                    <div class="col" v-for="movie in this.store.movies" :key="movie.id" :class="addNone(this.store.selectedFilmGen, movie)">
+                    <div class="col" v-for="movie in this.store.movies" :key="movie.id" v-show="addNone(this.store.selectedFilmGen, movie)">
                         <AppCard :item="movie" @moreInfo="getMoreInfo" type="film" />
                     </div>
                 </div>
@@ -63,7 +64,7 @@ export default {
             <section class="tv" v-show="this.store.series.length > 0">
                 <h2>Serie TV</h2>
                 <div class="row">
-                    <div class="col" v-for="serie in this.store.series" :key="serie.id" :class="addNone(this.store.selectedSerieTvGen, serie)">
+                    <div class="col" v-for="serie in this.store.series" :key="serie.id" v-show="addNone(this.store.selectedSerieTvGen, serie)">
                         <AppCard :item="serie" @moreInfo="getMoreInfo" type="serie" />
                     </div>
                 </div>

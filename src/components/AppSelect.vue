@@ -30,7 +30,7 @@ export default {
     <div class="my-select">
         <label for="{{ type }}">Filtra per genere di {{ type }}</label>
         <select name="{{ type }}" id="" v-model="tempModel" @change="handleModel">
-            <option selected value="">Nessun Filtro</option>
+            <option selected value="0">Nessun Filtro</option>
             <option v-for="genre in genres" :value="genre.id">{{ genre.name }}</option>
         </select>
     </div>
