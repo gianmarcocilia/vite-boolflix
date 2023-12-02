@@ -6,6 +6,10 @@ export default {
     data() {
         return {
             store,
+            counterFilmNone: 0,
+            counterSerieNone: 0,
+            allFilmNone: false,
+            allSerieNone: false
         }
     },
     components: { AppCard },
@@ -32,14 +36,24 @@ export default {
         troncateArray(array) {
             return array.splice(0, 5);
         },
-        addNone(control, object) {
-            console.log(control);
+        addNone(control, object, number) {
             if (control != null && control != "0") {
                 if ((object.genre_ids.includes(control))) {
-                    console.log("visibile");
                     return true;
                 } else {
                     console.log("nascosto");
+                    if (number == 1 && this.counterFilmNone != this.store.movies.length) {
+                        this.counterFilmNone = this.counterFilmNone + 1;
+                        if (this.counterFilmNone === this.store.movies.length) {
+                            this.allFilmNone = true;
+                            console.log(this.allFilmNone);
+                        }
+                    } else if (number == 2 && this.counterSerieNone != this.store.series.length) {
+                        this.counterSerieNone = this.counterSerieNone + 1;
+                        if (this.counterSerieNone === this.store.series.length) {
+                            this.allSerieNone = true;
+                        }
+                    }
                     return false;
                 }
             }
@@ -55,8 +69,15 @@ export default {
             <section class="film" v-show="this.store.movies.length > 0">
                 <h2>Film</h2>
                 <div class="row">
-                    <div class="col" v-for="movie in this.store.movies" :key="movie.id" v-show="addNone(this.store.selectedFilmGen, movie)">
+                    <div class="col" v-for="movie in this.store.movies" :key="movie.id"
+                        v-show="addNone(this.store.selectedFilmGen, movie, 1)">
                         <AppCard :item="movie" @moreInfo="getMoreInfo" type="film" />
+                    </div>
+                    <div class="no-result" v-if="allFilmNone">
+                        <h3>
+                            Nessun risultato per questo filtro di genere Film!
+                        </h3>
+                        <h4>Provane un altro.</h4>
                     </div>
                 </div>
             </section>
@@ -64,8 +85,15 @@ export default {
             <section class="tv" v-show="this.store.series.length > 0">
                 <h2>Serie TV</h2>
                 <div class="row">
-                    <div class="col" v-for="serie in this.store.series" :key="serie.id" v-show="addNone(this.store.selectedSerieTvGen, serie)">
+                    <div class="col" v-for="serie in this.store.series" :key="serie.id"
+                        v-show="addNone(this.store.selectedSerieTvGen, serie, 2)">
                         <AppCard :item="serie" @moreInfo="getMoreInfo" type="serie" />
+                    </div>
+                    <div class="no-result" v-if="allSerieNone">
+                        <h3>
+                            Nessun risultato per questo filtro di genere SerieTv!
+                        </h3>
+                        <h4>Provane un altro.</h4>
                     </div>
                 </div>
             </section>
@@ -94,10 +122,17 @@ main {
         .col {
             width: calc(100% / 5);
             aspect-ratio: .6;
+
             &.none {
                 display: none;
             }
         }
+
+        .no-result {
+            padding: 2rem 0;
+            h4 {
+                padding: .5rem 0;
+            }
+        }
     }
-}
-</style>
+}</style>
